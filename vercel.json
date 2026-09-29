@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/admin", "destination": "/index.html" },
+    { "source": "/operator", "destination": "/index.html" },
+    { "source": "/urna", "destination": "/index.html" }
+  ]
+}
