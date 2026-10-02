@@ -1,5 +1,4 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     { "source": "/admin", "destination": "/index.html" },
     { "source": "/operator", "destination": "/index.html" },
