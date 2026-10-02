@@ -218,7 +218,7 @@ function Login() {
         <div className="auth-copy">
           <span className="eyebrow">ACESSO RESTRITO</span>
           <h2>Entrar no sistema</h2>
-          <p>Use seu e-mail e senha cadastrados.</p>
+          <p>Use seu e-mail e senha cadastrados no Firebase.</p>
         </div>
         <div className="role-switch" aria-label="Tipo de acesso">
           <button type="button" className={role === 'admin' ? 'active' : ''} onClick={() => changeRole('admin')}>
@@ -238,7 +238,7 @@ function Login() {
           {error && <div className="alert error">{error}</div>}
           <button className="primary large login-button" disabled={loading || !email || !password}>{loading ? 'Entrando...' : 'Acessar sistema'}<span>→</span></button>
         </form>
-        <div className="auth-footer"><span className="live-dot" /> • Autenticação Ativa</div>
+        <div className="auth-footer"><span className="live-dot" /> Campos começam vazios • Autenticação Firebase</div>
       </section>
     </div>
   </div>;

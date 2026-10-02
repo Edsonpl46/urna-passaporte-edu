@@ -6,4 +6,3 @@ dist/
 *.log
 service-account*.json
 firebase-debug.log
-urna-passaporte-edu-firebase-adminsdk-*.json
