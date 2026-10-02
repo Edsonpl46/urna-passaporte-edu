@@ -84,3 +84,8 @@ As operações de iniciar/finalizar eleição e registrar voto passam por Vercel
 ## Configuração para iniciantes
 
 Veja `CONFIGURACAO_FIREBASE.md`. Ele explica desde a criação do projeto Firebase até as variáveis da Vercel e o cadastro das contas de Gestão e Operador.
+
+
+### Áudio de confirmação
+
+Ao confirmar um voto, a urna reproduz o arquivo `public/audio/voto-confirmado.mp3` fornecido para esta versão. O áudio começa no clique/toque de **CONFIRMA**, respeitando as políticas de reprodução do navegador.

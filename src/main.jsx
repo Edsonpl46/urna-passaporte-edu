@@ -238,7 +238,7 @@ function Login() {
           {error && <div className="alert error">{error}</div>}
           <button className="primary large login-button" disabled={loading || !email || !password}>{loading ? 'Entrando...' : 'Acessar sistema'}<span>→</span></button>
         </form>
-        <div className="auth-footer"><span className="live-dot" /> Campos começam vazios • Autenticação Firebase</div>
+        <div className="auth-footer"><span className="live-dot" />• Autenticação Ativa </div>
       </section>
     </div>
   </div>;
@@ -399,6 +399,18 @@ function Urna() {
   const [busy, setBusy] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const timerRef = useRef(null);
+  const confirmSoundRef = useRef(null);
+
+  useEffect(() => {
+    const audio = new Audio('/audio/voto-confirmado.mp3');
+    audio.preload = 'auto';
+    confirmSoundRef.current = audio;
+    return () => {
+      audio.pause();
+      audio.currentTime = 0;
+      confirmSoundRef.current = null;
+    };
+  }, []);
 
   useEffect(() => {
     function handleKeydown(event) {
@@ -464,11 +476,21 @@ function Urna() {
         throw new Error(`A API da Vercel respondeu com ${response.status} (${response.statusText}) em vez de JSON.`);
       }
       if (!response.ok) throw new Error(data.message || `Não foi possível registrar o voto (HTTP ${response.status}).`);
-      beep('confirm');
+      playConfirmationSound();
       setNumber(''); setSelection(null); setConfirmed(true);
       setTimeout(() => setConfirmed(false), 1600);
     } catch (err) { setToast(err.message); beep('error'); }
     finally { setBusy(false); }
+  }
+
+  function playConfirmationSound() {
+    const audio = confirmSoundRef.current;
+    if (!audio) return;
+    try {
+      audio.currentTime = 0;
+      const promise = audio.play();
+      promise?.catch(() => {});
+    } catch {}
   }
 
   function beep(kind) {
@@ -477,7 +499,7 @@ function Urna() {
       const ctx = new Ctx();
       const osc = ctx.createOscillator(); const gain = ctx.createGain();
       osc.connect(gain); gain.connect(ctx.destination);
-      const settings = kind === 'confirm' ? { frequency: 740, duration: 0.22 } : kind === 'blank' ? { frequency: 520, duration: 0.11 } : { frequency: 210, duration: 0.18 };
+      const settings = kind === 'blank' ? { frequency: 520, duration: 0.11 } : { frequency: 210, duration: 0.18 };
       osc.frequency.value = settings.frequency; gain.gain.value = 0.06; osc.start(); osc.stop(ctx.currentTime + settings.duration);
     } catch {}
   }
