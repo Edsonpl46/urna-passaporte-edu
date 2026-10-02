@@ -1,3 +1,14 @@
+
+## Diagnóstico da Vercel
+
+Depois do deploy, abra `/api/health` no navegador. O resultado esperado é:
+
+```json
+{"ok":true,"message":"Vercel Function + Firebase Admin funcionando."}
+```
+
+Se aparecer 404 ou uma página HTML, as Functions `/api` não foram publicadas. Se aparecer 500 com uma mensagem, abra `Vercel > Deployments > Functions/Logs` e corrija as variáveis `FIREBASE_PROJECT_ID`, `FIREBASE_CLIENT_EMAIL` e `FIREBASE_PRIVATE_KEY`.
+
 # Urna Passaporte Edu — Firebase + Vercel
 
 Sistema de votação escolar para a Passaporte Edu Limoeiro.

@@ -218,7 +218,7 @@ function Login() {
         <div className="auth-copy">
           <span className="eyebrow">ACESSO RESTRITO</span>
           <h2>Entrar no sistema</h2>
-          <p>Use seu e-mail e senha cadastrados no Firebase.</p>
+          <p>Use seu e-mail e senha cadastrados.</p>
         </div>
         <div className="role-switch" aria-label="Tipo de acesso">
           <button type="button" className={role === 'admin' ? 'active' : ''} onClick={() => changeRole('admin')}>
@@ -356,10 +356,18 @@ function OperatorDashboard() {
   async function callElection(action) {
     setLoading(true); setMessage('');
     try {
-      const token = await auth.currentUser.getIdToken();
-      const response = await fetch(`/api/election?action=${action}`, { method: 'POST', headers: { Authorization: `Bearer ${token}` } });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message || 'Falha ao atualizar a eleição.');
+      const token = await auth.currentUser.getIdToken(true);
+      const response = await fetch(`/api/election?action=${encodeURIComponent(action)}`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
+      });
+      const raw = await response.text();
+      let data = {};
+      try { data = raw ? JSON.parse(raw) : {}; }
+      catch {
+        throw new Error(`A API da Vercel respondeu com ${response.status} (${response.statusText}) em vez de JSON.`);
+      }
+      if (!response.ok) throw new Error(data.message || `Falha ao atualizar a eleição (HTTP ${response.status}).`);
       if (action === 'start') go('/urna');
       if (action === 'finalize') await exportPdf(normalizeElection(data.election), candidates);
     } catch (err) { setMessage(err.message); }
@@ -442,11 +450,20 @@ function Urna() {
     if (!type) { setToast('Digite um número válido ou selecione BRANCO.'); beep('error'); return; }
     setBusy(true); setToast('');
     try {
-      const token = await auth.currentUser.getIdToken();
+      const token = await auth.currentUser.getIdToken(true);
       const body = type === 'candidate' ? { type, number: candidate.number } : { type };
-      const response = await fetch('/api/vote', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify(body) });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message || 'Não foi possível registrar o voto.');
+      const response = await fetch('/api/vote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}`, Accept: 'application/json' },
+        body: JSON.stringify(body),
+      });
+      const raw = await response.text();
+      let data = {};
+      try { data = raw ? JSON.parse(raw) : {}; }
+      catch {
+        throw new Error(`A API da Vercel respondeu com ${response.status} (${response.statusText}) em vez de JSON.`);
+      }
+      if (!response.ok) throw new Error(data.message || `Não foi possível registrar o voto (HTTP ${response.status}).`);
       beep('confirm');
       setNumber(''); setSelection(null); setConfirmed(true);
       setTimeout(() => setConfirmed(false), 1600);

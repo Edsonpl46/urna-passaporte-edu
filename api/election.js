@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   try {
     if (req.method !== 'POST') return sendJson(res, 405, { message: 'Método não permitido.' });
     await requireRole(req, 'operator');
-    const action = new URL(req.url, 'http://localhost').searchParams.get('action');
+    const action = req.query?.action || new URL(req.url || '/api/election', 'http://localhost').searchParams.get('action');
     const db = adminDb();
     const electionRef = db.collection('election').doc('current');
     const electionSnap = await electionRef.get();
