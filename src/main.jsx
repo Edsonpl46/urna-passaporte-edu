@@ -238,7 +238,7 @@ function Login() {
           {error && <div className="alert error">{error}</div>}
           <button className="primary large login-button" disabled={loading || !email || !password}>{loading ? 'Entrando...' : 'Acessar sistema'}<span>→</span></button>
         </form>
-        <div className="auth-footer"><span className="live-dot" />• Autenticação Ativa </div>
+        <div className="auth-footer"><span className="live-dot" /> Campos começam vazios • Autenticação Firebase</div>
       </section>
     </div>
   </div>;
