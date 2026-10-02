@@ -258,7 +258,7 @@ Faça nesta ordem:
 8. Clique em **CONFIRMA**.
 9. Abra o dashboard de Gestão em outro computador ou navegador.
 10. O voto deve aparecer automaticamente.
-11. Tente registrar outro voto imediatamente: a urna deve bloquear por 30 segundos.
+11. Tente registrar outro voto imediatamente: a urna deve bloquear por 15 segundos.
 12. Depois, finalize a eleição pelo perfil Operador.
 13. Exporte o PDF.
 

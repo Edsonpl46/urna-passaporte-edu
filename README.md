@@ -19,7 +19,7 @@ Sistema de votação escolar para a Passaporte Edu Limoeiro.
 - Firebase Authentication para login por e-mail e senha.
 - Cloud Firestore para candidatos e apuração em tempo real.
 - Vercel Functions em `/api` para iniciar/finalizar eleição e registrar votos.
-- O intervalo de 30 segundos é validado no servidor, e não apenas no navegador.
+- O intervalo de 15 segundos é validado no servidor, e não apenas no navegador.
 - PDF de apuração gerado no navegador.
 - Teclado da urna clicável por toque, mouse e teclado físico.
 - Fotos são comprimidas no navegador e salvas no documento do candidato, evitando a necessidade de Storage nesta primeira versão.

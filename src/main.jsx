@@ -386,7 +386,7 @@ function OperatorDashboard() {
       </div>
     </div>
     {candidates.length === 0 && <div className="alert warning">Nenhum candidato cadastrado. Entre no perfil de Gestão para cadastrar os candidatos antes de iniciar.</div>}
-    <section className="panel"><div className="panel-head"><div><span className="section-kicker">OPERAÇÃO</span><h3>Resumo da rodada</h3><p>O próximo voto fica bloqueado por 30 segundos após cada confirmação.</p></div></div><div className="metric-grid"><Metric label="Candidatos" value={candidates.length} /><Metric label="Votos" value={election.totalVotes} /><Metric label="Brancos" value={election.blankVotes} /><Metric label="Nulos" value={election.nullVotes} /></div></section>
+    <section className="panel"><div className="panel-head"><div><span className="section-kicker">OPERAÇÃO</span><h3>Resumo da rodada</h3><p>O próximo voto fica bloqueado por 15 segundos após cada confirmação.</p></div></div><div className="metric-grid"><Metric label="Candidatos" value={candidates.length} /><Metric label="Votos" value={election.totalVotes} /><Metric label="Brancos" value={election.blankVotes} /><Metric label="Nulos" value={election.nullVotes} /></div></section>
   </Shell>;
 }
 
@@ -507,7 +507,7 @@ function Urna() {
         </div>
       </div>
     </div>
-    <div className="urna-footnote">Os dados são atualizados em tempo real. Intervalo obrigatório entre votos: 30 segundos.</div>
+    <div className="urna-footnote">Os dados são atualizados em tempo real. Intervalo obrigatório entre votos: 15 segundos.</div>
   </div>;
 }
 

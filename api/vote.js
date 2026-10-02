@@ -1,7 +1,7 @@
 import { FieldValue, Timestamp } from 'firebase-admin/firestore';
 import { adminDb, requireRole, HttpError, sendJson } from './_firebaseAdmin.js';
 
-const COOLDOWN_MS = 30_000;
+const COOLDOWN_MS = 15_000;
 
 export default async function handler(req, res) {
   try {
